@@ -1,0 +1,95 @@
+<!-- <div class="header"></div> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="row header">
+    <div class="col-xs-9 col-sm-9 col-lg-11" >
+        <img src="../../assets/logo.png" style="height:50px ; width:50px">
+    </div>
+    <div class="col-xs-3 col-sm-3 col-lg-1"  (click)="openCartDetails(products)">      
+        <i class="fa fa-shopping-cart" style="font-size:45px" data-toggle="modal" data-target="#myModal"></i>
+        <span class="badge">{{products.length}}</span>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog"  >
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content" style="padding:10px">
+        <div class="modal-header" style="padding:2px">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- <h4 class="modal-title">Modal Header</h4> -->
+        </div>
+        <!-- <div class="modal-body">
+          <p>Some text in the modal.</p>
+          <div>{{products}}</div>
+        </div> -->
+
+
+        <div *ngIf="isCartDetailOpen" >
+          <form [formGroup]="cartForm">
+            <table  class="centered" *ngIf="getForm(cartForm).length;else noData">
+              <thead class="">
+                <tr>
+                  <!-- <th>IMAGE</th> -->
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Sub Total</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="carts">
+                <tr [formGroupName]="i" *ngFor="let item of getForm(cartForm); let i = index" class="trBrBtm  " style="margin:0px">
+                  <!-- <td style="width:10% ">
+                    <img [src]="item.productImage" width="100%" style="min-height: 100px;max-height:100px">
+                  </td>  -->
+                  <td ><input type="textbox" formControlName="name" class="form-control" readonly
+                      style="text-align:center"> 
+                  </td>
+                  <td ><input   formControlName="price"
+                      class="form-control"  min="1" readonly>
+                  </td>
+                 
+                  <td ><input type="number"  formControlName="quantity" (change)="addQuantity(i,item,$event)"
+                      class="form-control"  class="" style="width:100px" min="1">
+                  </td>
+                  <td ><input  formControlName="subTotal" readonly
+                    class="form-control"  class="" style="width:100px">
+                </td>
+                  <td  style="padding-right:20px"> <i class="fa fa-trash material-icons "
+                      (click)="removeCartItem(item,i)" style="cursor:pointer ; color:red ; font-size:25px"> </i>
+                  </td>
+                </tr>
+      
+                <!-- <tr class="totalTrStyle ">
+                  <th style="font-weight:bold ; text-align:center ; font-size:14px">TOTAL</th>
+      
+                  <td style="font-weight:bold ; text-align:start ; font-size:14px" colspan="2"></td>      
+                  <th style="font-weight:bold ; text-align:center ; font-size:14px" id="totalWeight">
+                    {{totalWeight | number:'1.3-3'}} </th>
+      
+                  <th style="font-weight:bold ; text-align:center ; font-size:14px">
+                    {{totalQuantity}}
+                  </th>
+                  <td></td>
+                  <td></td>
+                </tr> -->
+              </tbody>
+            </table>
+            <ng-template #noData>
+              <h2>Your cart is empty</h2>
+            </ng-template>
+            
+          </form>
+        </div>
+
+
+
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        </div>
+      </div>
+  
+    </div>
+  </div>
