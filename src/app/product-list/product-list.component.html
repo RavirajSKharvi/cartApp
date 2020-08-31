@@ -1,12 +1,14 @@
 <!-- <div class="product-list">
     <app-product *ngFor="let product of products" [product]="product"></app-product>
   </div> -->
-  <div class="container">
+  <div class="container" *ngIf="isData;else noData" style="height: 100%;">
     <div class="product-display">
-      <app-product
-        *ngFor="let prod of products; let i = index"
-        [product]="prod"
-        >
-    </app-product>
+      <app-product *ngFor="let prod of products; let i = index"
+        [product]="prod">
+      </app-product>
     </div>
   </div>
+  <ng-template #noData>
+    <div class="spinner-border"></div>
+  </ng-template>
+  

@@ -11,18 +11,21 @@ import { Observable } from 'rxjs';
 export class ProductListComponent implements OnInit {
 
   constructor(private productService : ProductServiceService) { }
-
-  //@Input() products: Product[] = [];
    products :Product[] = [];
-  //products: Observable<Product[]>;
-  ngOnInit(): void {
-    this.getAllProducts()
-  }
+   isData:boolean=false;
+    ngOnInit(): void {
+      this.getAllProducts()
+    }
 
   getAllProducts(){
     this.productService.getProducts().subscribe((res:any)=>{
-      console.log(res);
-      this.products = res.data;
+      if(res.data && res.data.length>0){
+        this.products = res.data;
+        this.isData = true;
+      }else{
+        this.isData = true;
+      }
+      
     },error=>{
       console.log('inside error',error)
     })
